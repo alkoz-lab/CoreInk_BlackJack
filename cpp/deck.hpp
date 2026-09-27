@@ -1,0 +1,17 @@
+#pragma once
+#include <vector>
+#include "Card.hpp"
+
+class Deck {
+public:
+    Deck();
+
+    void shuffle();
+    Card deal();   // will throw if deck empty
+
+    bool empty() const;
+    std::size_t size() const;
+
+private:
+    std::vector<Card> cards_;
+};
