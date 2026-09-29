@@ -7,18 +7,29 @@
 // -----------------------------
 // Constructor: build full deck
 // -----------------------------
-Deck::Deck() {
+Deck::Deck()
+{
     cards_.reserve(52);
+    reset();
+}
+
+// -----------------------------
+// Refill without releasing the existing buffer
+// -----------------------------
+void Deck::reset()
+{
+    cards_.clear();
 
     const char suits[] = {
         Card::SUIT_CLUBS,
         Card::SUIT_DIAMONDS,
         Card::SUIT_HEARTS,
-        Card::SUIT_SPADES
-    };
+        Card::SUIT_SPADES};
 
-    for (char suit : suits) {
-        for (int rank = 1; rank <= 13; ++rank) {
+    for (char suit : suits)
+    {
+        for (int rank = 1; rank <= 13; ++rank)
+        {
             cards_.emplace_back(suit, rank);
         }
     }
@@ -27,7 +38,8 @@ Deck::Deck() {
 // -----------------------------
 // Shuffle using C++ RNG
 // -----------------------------
-void Deck::shuffle() {
+void Deck::shuffle()
+{
     static std::mt19937 gen(esp_random());
     std::shuffle(cards_.begin(), cards_.end(), gen);
 }
@@ -35,11 +47,13 @@ void Deck::shuffle() {
 // -----------------------------
 // Deal: pop from end (Python pop())
 // -----------------------------
-Card Deck::deal() {
-	if (empty()) {
+Card Deck::deal()
+{
+    if (empty())
+    {
         throw std::runtime_error("Deck is out of cards — cannot deal.");
     }
-	
+
     Card c = cards_.back();
     cards_.pop_back();
     return c;
@@ -48,10 +62,12 @@ Card Deck::deal() {
 // -----------------------------
 // Helpers
 // -----------------------------
-bool Deck::empty() const {
+bool Deck::empty() const
+{
     return cards_.empty();
 }
 
-std::size_t Deck::size() const {
+std::size_t Deck::size() const
+{
     return cards_.size();
 }

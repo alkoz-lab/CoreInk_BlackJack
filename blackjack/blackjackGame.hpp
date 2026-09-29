@@ -4,21 +4,23 @@
 #include "Score.hpp"
 #include "Presenter.hpp"
 
-class BlackjackGame {
+class BlackjackGame
+{
 public:
-    BlackjackGame(int maxScore, Presenter& presenter);
+    BlackjackGame(int maxScore, Presenter &presenter);
 
     void playRound();
     bool isGameOver() const;
 
-    const Score& score() const;
+    const Score &score() const;
 
 private:
     Deck deck_;
     Hand dealer_;
     Hand player_;
     Score score_;
-    Presenter& presenter_;
+    Presenter &presenter_;
+    int round_ = 1;
 
     void initialDeal(int round);
     void playerTurn(int round);

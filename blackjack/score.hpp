@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
 
-class Score {
+class Score
+{
 public:
     Score(int max_score);
 

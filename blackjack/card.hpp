@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
 
-class Card {
+class Card
+{
 public:
     // Rank constants
     static const int RANK_ACE;
@@ -16,9 +17,9 @@ public:
     static const char SUIT_SPADES;
 
     Card(char suit, int rank);
-	
-	char suit() const;
-	int rank() const;
+
+    char suit() const;
+    int rank() const;
 
     std::string toString() const;
     std::string getRankAsString() const;
