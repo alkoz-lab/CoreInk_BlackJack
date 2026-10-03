@@ -7,6 +7,7 @@ public:
     Score(int max_score);
 
     std::string toString() const;
+    void reset();
 
     bool gameOver() const;
 

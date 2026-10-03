@@ -24,6 +24,20 @@ const Score &BlackjackGame::score() const
     return score_;
 }
 
+void BlackjackGame::reset()
+{
+    dealer_.clear();
+    player_.clear();
+    score_.reset();
+    round_ = 1;
+}
+
+void BlackjackGame::reset(int maxScore)
+{
+    score_ = Score(maxScore);
+    reset();
+}
+
 void BlackjackGame::playRound()
 {
     deck_.reset();
@@ -64,7 +78,7 @@ void BlackjackGame::playerTurn(int round)
         if (hit)
         {
             player_.takeCard(deck_.deal());
-            presenter_.anotherPlayerTakesCards(round, dealer_, player_, score_);
+            presenter_.anotherPlayerTakesCards(round, dealer_, player_, score_, false);
         }
         else
         {
@@ -78,7 +92,7 @@ void BlackjackGame::dealerTurn(int round)
     while (dealer_.getValue() < 17)
     {
         dealer_.takeCard(deck_.deal());
-        presenter_.anotherPlayerTakesCards(round, dealer_, player_, score_);
+        presenter_.anotherPlayerTakesCards(round, dealer_, player_, score_, true);
     }
 }
 

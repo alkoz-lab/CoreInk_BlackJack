@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "Hand.hpp"
 #include "Score.hpp"
 
@@ -10,5 +11,5 @@ public:
                                 const Hand &player,
                                 Score &score);
 
-    static std::string rules();
+    static const std::vector<std::string> &rules();
 };

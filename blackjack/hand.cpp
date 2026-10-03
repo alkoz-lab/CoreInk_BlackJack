@@ -30,6 +30,11 @@ std::size_t Hand::size() const
     return cards_.size();
 }
 
+const Card &Hand::getCard(std::size_t index) const
+{
+    return cards_.at(index);
+}
+
 // -----------------------------
 // toString() — same as Python __str__
 // -----------------------------

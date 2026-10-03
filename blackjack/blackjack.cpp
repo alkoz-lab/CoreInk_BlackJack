@@ -33,16 +33,55 @@ void Blackjack::determineWinner(const Hand &dealer,
 }
 
 // ---------------------------------------------------------
-// rules() — returns the same text as Python version
+// Rules preformatted for the CoreInk display.
 // ---------------------------------------------------------
-std::string Blackjack::rules()
+const std::vector<std::string> &Blackjack::rules()
 {
-    return "Blackjack is a card game where players try to get a hand value\n"
-           "of 21 or as close to 21 as possible without going over.\n"
-           "Players are dealt two cards and can choose to 'hit' for\n"
-           "additional cards or 'stand' to keep their current hand.\n"
-           "The dealer also receives two cards, one face-up and one face-down.\n"
-           "The dealer must hit until their hand value is at least 17.\n"
-           "If a player's hand value is higher than the dealer's without\n"
-           "going over 21, the player wins.";
+    static const std::vector<std::string> lines = {
+        "Blackjack is a card game ",
+        "where players try to get ",
+        "a hand value of 21 or as ",
+        "close to 21 as possible ",
+        "without going over.",
+        "\n",
+        "Players are dealt two ",
+        "cards and can choose to ",
+        "'hit' for additional ",
+        "cards or 'stand' to keep ",
+        "their current hand.",
+        "\n",
+        "The dealer also receives ",
+        "two cards, one face-up ",
+        "and one face-down.",
+        "The dealer must hit until",
+        "their hand value is at ",
+        "least 17.",
+        "If a player's hand value ",
+        "is higher than the ",
+        "dealer's without going ",
+        "over 21, the player wins.",
+        "\n",
+        "Number cards count as ",
+        "their number.",
+        "Jacks, queens and kings ",
+        "count as 10.",
+        "Aces count as 11 or 1 to ",
+        "avoid going over 21.",
+        "\n",
+        "Going over 21 is a bust.",
+        "A dealer bust gives you a",
+        "win; otherwise a player ",
+        "bust gives the dealer a ",
+        "win.",
+        "Equal totals are a draw.",
+        "Each win adds one point;",
+        "a draw adds none.",
+        "\n",
+        "The first to the ",
+        "selected score wins the ",
+        "game.",
+        "\n",
+        "During play, press Up to",
+        "hit or Down to stand."};
+    return lines;
 }

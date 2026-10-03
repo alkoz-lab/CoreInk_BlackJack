@@ -10,6 +10,8 @@ public:
     BlackjackGame(int maxScore, Presenter &presenter);
 
     void playRound();
+    void reset();
+    void reset(int maxScore);
     bool isGameOver() const;
 
     const Score &score() const;
@@ -27,5 +29,4 @@ private:
     void dealerTurn(int round);
     void determineWinner();
 
-    static std::string rules();
 };

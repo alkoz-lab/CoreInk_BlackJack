@@ -12,6 +12,14 @@ Score::Score(int max_score)
 {
 }
 
+void Score::reset()
+{
+    left_score_ = 0;
+    right_score_ = 0;
+    is_left_winner_ = false;
+    is_draw_ = false;
+}
+
 // -----------------------------
 // toString() — match Python behavior
 // -----------------------------

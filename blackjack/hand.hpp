@@ -11,6 +11,7 @@ public:
     Hand(const std::string &name);
 
     std::size_t size() const;
+    const Card &getCard(std::size_t index) const;
 
     std::string toString() const;
     std::string getCardsString() const;

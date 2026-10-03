@@ -1,0 +1,45 @@
+Blackjack screens and controls
+
+Power on: the card splash is shown, followed by "Press any key".
+The three face-up cards are a random ten, a random ace, and a random
+jack, queen or king, each in any suit. The card back stays unchanged.
+Any rocker button or the external button
+opens the main menu.
+
+Main menu: Up/Down moves the highlight; the middle button selects.
+  Start game: opens "Play until". Select 5, 10, 25 or 50 with the same
+              controls. A fresh game starts with both scores at zero.
+              The first player or dealer to reach that score wins.
+  Rules: Up/Down changes pages, stopping at the first and last pages.
+         The middle button returns to the main menu.
+         Rules use preformatted lines, including blank separators,
+         displayed nine lines per page without runtime word wrapping.
+  Power off: displays the same title and card layout as the startup splash,
+             with a freshly randomized ten, ace and face card,
+             with "Power is off", waits for the e-ink refresh, then
+             powers down. The image remains on the unpowered display.
+
+Gameplay controls are unchanged: Up hits, Down stands, and any button
+advances past the round result.
+Prompts use Font8x8C64 glyphs for Up (0x8C), Down (0x8F) and Middle (0x8A),
+with AsciiFont8x16 for the remaining text.
+
+Game over: a centered Satisfy_24 title, winner, final dealer:player score,
+and "Press any key" are shown. Any button returns to the main menu.
+There is no automatic replay or 60-second shutdown; use Power off in
+the main menu to shut down.
+
+Hardware verification checklist
+  - Check all three main-menu actions and all four target scores.
+  - Start another game after Game over and confirm round 1 and score 0:0.
+  - Check that the preformatted Rules lines fit and every page is readable.
+  - Check page boundaries and the middle-button return from every page.
+  - Confirm the gameplay layout and Hit/Stand controls are unchanged.
+  - Check the button glyphs in menu, rules and Hit/Stand prompts.
+  - Across several splashes, check that suits and face-card ranks vary,
+    while the ten and ace keep their ranks and the card back is unchanged.
+  - Confirm Game over has no inverted title bar and all text is centered.
+  - Confirm the power-off image remains visible after shutdown.
+
+Firmware compile check (PowerShell, Arduino IDE CLI):
+  & "$env:LOCALAPPDATA\Programs\Arduino IDE\resources\app\lib\backend\resources\arduino-cli.exe" compile --quiet --fqbn m5stack:esp32:m5stack_coreink "c:\dev\CoreInk\BlackJack\blackjack"
