@@ -5,6 +5,8 @@ M5Unified. The interface is designed for the CoreInk's 200 × 200 e-ink display 
 
 The in-game **RULES** screen describes this app's simplified variant, which is based around reaching the max score.
 
+Watch the [YouTube demo](https://youtube.com/shorts/ukWiBB_fCVw?feature=share).
+
 ## App screenshots
 
 ![Splash screen](<docs/screenshots/01 Splash Screen.png>)
