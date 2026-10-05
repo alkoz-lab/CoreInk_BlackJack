@@ -1,33 +1,20 @@
 #include <M5Unified.h>
-#include <exception>
+#include "BlackjackApp.hpp"
+#include "src/CoreInkKit/LightSleep.hpp"
 
-#include "BlackjackGame.hpp"
-#include "Presenter.hpp"
+// Light-sleep between button presses. Set to false to compare battery draw (see
+// docs/refactoring-plan.md, "Measuring light sleep").
+constexpr bool IDLE_LIGHT_SLEEP = true;
 
-Presenter presenter;
-BlackjackGame game(5, presenter);
-
-void setup() {
-  Serial.begin(115200);
+void setup()
+{
   M5.begin();
+  M5.Display.setEpdMode(lgfx::epd_mode_t::epd_fast);
   M5.Display.setAutoDisplay(false);
+  static BlackjackApp app(IDLE_LIGHT_SLEEP ? LightSleep::untilButton : nullptr);
+  app.run();
 }
 
-void loop() {
-  try {
-    if (!game.isGameOver()) {
-      game.playRound();
-      return;
-    }
-
-    presenter.gameOver(game.score());
-  }
-  catch (const std::exception& ex) {
-    Serial.printf("FATAL ERROR: %s\n", ex.what());
-    presenter.fatalError(ex.what());
-  }
-
-  // E-ink keeps the final screen while powered off.
-  M5.Display.waitDisplay();
-  M5.Power.powerOff();
+void loop()
+{
 }
