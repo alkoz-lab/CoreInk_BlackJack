@@ -15,7 +15,7 @@ Watch the [YouTube demo](https://youtube.com/shorts/ukWiBB_fCVw?feature=share).
 
 ## Build and upload
 
-### Install the development tools with winget
+### Install the development tools
 
 In PowerShell, install Arduino IDE:
 
@@ -23,8 +23,95 @@ In PowerShell, install Arduino IDE:
 winget install --id ArduinoSA.IDE.stable --exact
 ```
 
-After installation, open Arduino IDE and install the M5Stack ESP32 platform
-through Boards Manager and **M5Unified** through Library Manager.
+## 🔧 Setting Up Arduino IDE for M5Stack CoreInk
+
+To build or modify the CoreInk Blackjack firmware, you need to install the M5Stack board support package in Arduino IDE.
+
+### 1. Install the M5Stack Board Package
+
+Arduino IDE does not include M5Stack boards by default. You must add the M5Stack Boards Manager URL.
+
+1. Open **Arduino IDE**
+2. Go to **File → Preferences**
+3. Find **Additional Boards Manager URLs**
+4. Paste the following URL:
+
+https://m5stack.oss-cn-shenzhen.aliyuncs.com/resource/arduino/package_m5stack_index.json 
+
+If you already have other URLs, you can add multiple entries separated by commas.
+
+5. Click **OK**
+
+---
+
+### 2. Install the Boards via Boards Manager
+
+1. Open **Tools → Board → Boards Manager**
+2. Search for **M5Stack**
+3. Install the package (recommended version: **3.3.9**)
+
+This package includes all official M5Stack devices, including **M5Stack-CoreInk**.
+
+---
+
+### 3. Select the CoreInk Board
+
+After installation:
+
+1. Open **Tools → Board**
+2. Scroll to the **M5Stack** section
+3. Select **M5Stack-CoreInk**
+
+Your Arduino IDE is now ready to compile and upload firmware for the CoreInk.
+
+---
+
+### 4. Required Libraries
+
+This project uses the official M5Stack libraries. Install them via:
+
+**Tools → Manage Libraries…**
+
+Search and install:
+
+- **M5Unified**
+- **M5GFX**
+- **ArduinoJSON** (if not already installed)
+
+---
+
+### 5. Compile the Project
+
+Open the project folder and compile:
+
+**Sketch → Verify / Compile**
+
+If everything is installed correctly, the build will produce:
+
+- `CoreInk_BlackJack.ino.bin`  
+- `CoreInk_BlackJack.ino.elf`
+
+You can use the `.bin` file to flash the firmware manually.
+
+---
+
+### 6. Flashing the Firmware (Optional)
+
+If you prefer flashing the prebuilt binary instead of compiling:
+
+#### Option A — M5Burner (GUI, easiest)
+
+1. Download **M5Burner** from M5Stack’s website  
+2. Open it and select **Custom Burn**
+3. Choose the `.bin` file from the Releases page
+4. Flash it to your CoreInk
+
+#### Option B — esptool.py (CLI)
+
+```bash
+esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 460800 \
+  write_flash 0x10000 CoreInk_BlackJack.bin
+```
 
 ### Requirements
 
