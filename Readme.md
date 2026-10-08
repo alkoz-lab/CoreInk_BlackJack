@@ -75,8 +75,6 @@ This project uses the official M5Stack libraries. Install them via:
 Search and install:
 
 - **M5Unified**
-- **M5GFX**
-- **ArduinoJSON** (if not already installed)
 
 ---
 
@@ -99,18 +97,18 @@ You can use the `.bin` file to flash the firmware manually.
 
 If you prefer flashing the prebuilt binary instead of compiling:
 
-#### Option A — M5Burner (GUI, easiest)
+Install esptool.py from Espressif via pip:
 
-1. Download **M5Burner** from M5Stack’s website  
-2. Open it and select **Custom Burn**
-3. Choose the `.bin` file from the Releases page
-4. Flash it to your CoreInk
+```
+pip install esptool
 
-#### Option B — esptool.py (CLI)
+```
 
-```bash
-esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 460800 \
-  write_flash 0x10000 CoreInk_BlackJack.bin
+Or download it from GitHub → espressif/esptool
+
+
+```
+python -m esptool.py --chip esp32 --port COM3 --baud 115200 write_flash 0x0 blackjack.bin
 ```
 
 ### Requirements
