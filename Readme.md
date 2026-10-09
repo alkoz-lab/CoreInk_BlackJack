@@ -84,10 +84,13 @@ Open the project folder and compile:
 
 **Sketch → Verify / Compile**
 
-If everything is installed correctly, the build will produce:
+When build succeeded, go to:
 
-- `CoreInk_BlackJack.ino.bin`  
-- `CoreInk_BlackJack.ino.elf`
+**Sketch → Export Compiled Binary**
+
+The IDE will place the generated files in blackjack/build/:
+
+blackjack.ino.bin — raw machine code
 
 You can use the `.bin` file to flash the firmware manually.
 
@@ -106,9 +109,8 @@ pip install esptool
 
 Or download it from GitHub → espressif/esptool
 
-
 ```
-python -m esptool.py --chip esp32 --port COM3 --baud 115200 write_flash 0x0 blackjack.bin
+esptool --chip esp32 --port COM3 --baud 115200 write_flash 0x0 blackjack.ino.bin
 ```
 
 ### Requirements
