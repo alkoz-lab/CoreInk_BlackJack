@@ -19,7 +19,7 @@ public:
     // Called while waiting and nothing accepted was pressed; must return within a few
     // tens of milliseconds of any button press. nullptr = delay(POLL_INTERVAL_MS).
     using IdleStep = void (*)();
-    static constexpr uint32_t POLL_INTERVAL_MS = 20;
+    static constexpr uint32_t POLL_INTERVAL_MS = 100; // 100ms = 10 times per second
 
     explicit Buttons(IdleStep idle = nullptr) : idle_(idle) {}
 

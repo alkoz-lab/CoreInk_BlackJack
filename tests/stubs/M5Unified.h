@@ -29,10 +29,18 @@ struct BitmapDraw
     int x, y, width, height;
     const unsigned char *bitmap;
 };
+struct TextDraw
+{
+    std::string text;
+    int x, y;
+    const int *font;
+    int color;
+};
 struct Frame
 {
     std::vector<BitmapDraw> cards;
     std::vector<std::string> text;
+    std::vector<TextDraw> textDraws;
 };
 inline std::vector<std::string> displayEvents;
 
@@ -40,18 +48,26 @@ struct TestDisplay
 {
     Frame current;
     std::vector<Frame> frames;
+    int cursorX = 0;
+    int cursorY = 0;
+    const int *font = nullptr;
+    int textColor = TFT_BLACK;
     int width() const { return 200; }
     void setEpdMode(epd_mode_t::Mode) {}
-    void setTextColor(int) {}
+    void setTextColor(int color) { textColor = color; }
     void setTextWrap(bool, bool) {}
     void setTextDatum(textdatum_t::Datum) {}
-    void setFont(const int *) {}
-    void setCursor(int, int) {}
+    void setFont(const int *value) { font = value; }
+    void setCursor(int x, int y) { cursorX = x; cursorY = y; }
     void fillRect(int, int, int, int, int) {}
     void drawRect(int, int, int, int, int) {}
     void fillScreen(int) { current = {}; }
     int textWidth(const char *text) const { return static_cast<int>(std::strlen(text)) * 8; }
-    void print(const char *text) { current.text.emplace_back(text); }
+    void print(const char *text)
+    {
+        current.text.emplace_back(text);
+        current.textDraws.push_back({text, cursorX, cursorY, font, textColor});
+    }
     void write(uint8_t) {}
     void drawString(const char *text, int, int) { print(text); }
     void drawBitmap(int x, int y, const unsigned char *bitmap,

@@ -1,5 +1,6 @@
 #include "TableScreen.hpp"
 #include "src/CoreInkKit/EinkFrame.hpp"
+#include "src/CoreInkKit/LightSleep.hpp"
 #include <cstdio>
 #include <string>
 
@@ -47,7 +48,7 @@ void TableScreen::showInitialDeal(const TableState &table)
     handView(Side::Dealer).draw(display_, table.dealer, true, false);
     handView(Side::Player).draw(display_, table.player, false, false);
     EinkFrame::present(display_);
-    delay(STEP_DELAY_MS);
+    LightSleep::forDuration(STEP_DELAY_MS);
 }
 
 void TableScreen::showHit(const TableState &table, Side side)
@@ -62,11 +63,10 @@ void TableScreen::showHit(const TableState &table, Side side)
         handView(Side::Player).draw(display_, table.player, false,
                                     hideNewestCard && !dealerHit);
         EinkFrame::present(display_);
-        display_.waitDisplay();
         if (hideNewestCard)
-            delay(CARD_BACK_DELAY_MS);
+            LightSleep::forDuration(CARD_BACK_DELAY_MS);
     }
-    delay(STEP_DELAY_MS);
+    LightSleep::forDuration(STEP_DELAY_MS);
 }
 
 void TableScreen::showRoundResult(const TableState &table, Outcome outcome)

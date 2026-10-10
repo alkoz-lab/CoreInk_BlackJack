@@ -36,7 +36,7 @@ const Card &Hand::getCard(std::size_t index) const
 }
 
 // -----------------------------
-// toString() — same as Python __str__
+// Name of the player
 // -----------------------------
 std::string Hand::toString() const
 {
@@ -72,7 +72,6 @@ const Card &Hand::getFirstCard() const
 
 // -----------------------------
 // Blackjack value calculation
-// Matches Python logic exactly
 // -----------------------------
 int Hand::getValue() const
 {

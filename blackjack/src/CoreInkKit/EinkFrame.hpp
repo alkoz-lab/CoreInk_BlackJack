@@ -6,7 +6,6 @@ namespace EinkFrame
 {
     inline void begin(M5GFX &d)
     {
-        d.setEpdMode(epd_mode_t::epd_quality);
         d.setEpdMode(epd_mode_t::epd_fast);
         d.fillScreen(TFT_WHITE);
         d.setTextColor(TFT_BLACK);

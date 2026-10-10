@@ -1,5 +1,6 @@
 #include <M5Unified.h>
 #include <driver/gpio.h>
+#include <esp_err.h>
 #include <esp_sleep.h>
 #include "Buttons.hpp"
 #include "LightSleep.hpp"
@@ -37,4 +38,18 @@ void LightSleep::untilButton()
     esp_sleep_disable_wakeup_source(ESP_SLEEP_WAKEUP_GPIO);
     for (gpio_num_t pin : WAKE_PINS)
         gpio_wakeup_disable(pin);
+}
+
+void LightSleep::forDuration(uint32_t milliseconds)
+{
+    if (milliseconds == 0)
+        return;
+
+    M5.Display.waitDisplay();
+    ESP_ERROR_CHECK(esp_sleep_enable_timer_wakeup(
+        static_cast<uint64_t>(milliseconds) * 1000ULL));
+    const esp_err_t sleepResult = esp_light_sleep_start();
+    const esp_err_t disableResult = esp_sleep_disable_wakeup_source(ESP_SLEEP_WAKEUP_TIMER);
+    ESP_ERROR_CHECK(sleepResult);
+    ESP_ERROR_CHECK(disableResult);
 }
