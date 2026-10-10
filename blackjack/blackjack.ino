@@ -2,8 +2,7 @@
 #include "BlackjackApp.hpp"
 #include "src/CoreInkKit/LightSleep.hpp"
 
-// Light-sleep between button presses. Set to false to compare battery draw (see
-// docs/refactoring-plan.md, "Measuring light sleep").
+// Light-sleep between button presses. Set to false to compare battery draw.
 constexpr bool IDLE_LIGHT_SLEEP = true;
 
 void setup()

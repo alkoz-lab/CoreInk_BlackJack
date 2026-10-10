@@ -70,8 +70,8 @@ namespace
         testPressScript = {PRESS_NONE, PRESS_NONE, PRESS_B}; // discarded, idle once, pressed
         displayEvents.clear();
         polling.waitForAny();
-        require(displayEvents.size() == 1 && displayEvents[0] == "delay:20",
-                "default idle step polls every 20 ms");
+        require(displayEvents.size() == 1 && displayEvents[0] == "delay:100",
+                "default idle step polls every 100 ms");
         testPressed = PRESS_ALL;
     }
 

@@ -23,7 +23,7 @@ namespace
 Buttons::Button Buttons::waitFor(std::initializer_list<Button> accepted)
 {
     M5.update();
-    while (true)
+    for(;;)
     {
         M5.update();
         for (Button button : accepted)

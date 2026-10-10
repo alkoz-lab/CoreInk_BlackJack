@@ -7,6 +7,9 @@
 
 namespace
 {
+    constexpr char APP_VERSION[] = "1.0.0";
+    constexpr int VERSION_FONT_HEIGHT = 8;
+
     Card randomCard(int firstRank, int lastRank)
     {
         RandomBits generator{hardwareRandom};
@@ -27,6 +30,12 @@ void SplashScreen::drawArt()
     CardRenderer::drawFace(d, 86, 75, randomCard(Card::RANK_ACE, Card::RANK_ACE));
     CardRenderer::drawFace(d, 136, 44, randomCard(Card::RANK_JACK, Card::RANK_KING));
     TextUtil::drawTitle(d, "Blackjack");
+    d.setFont(&fonts::Font8x8C64);
+    d.setTextColor(TFT_BLACK);
+    d.setCursor(d.width() - d.textWidth(APP_VERSION),
+                prompt_.y() - VERSION_FONT_HEIGHT);
+    d.print(APP_VERSION);
+    d.setFont(&fonts::AsciiFont8x16);
 }
 
 void SplashScreen::show()
@@ -35,7 +44,7 @@ void SplashScreen::show()
     drawArt();
     prompt_.drawOutline(d);
     EinkFrame::present(d);
-    prompt_.draw(d, "Press any key");
+    prompt_.draw(d, "Press any button");
     EinkFrame::present(d);
     d.waitDisplay();
     buttons_.waitForAny();

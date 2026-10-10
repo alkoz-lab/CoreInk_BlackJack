@@ -21,6 +21,21 @@ namespace
         return std::find(lines.begin(), lines.end(), text) != lines.end();
     }
 
+    bool showsVersionAtExpectedPosition(const Frame &frame)
+    {
+        for (const auto &draw : frame.textDraws)
+        {
+            if (draw.text == "1.0.0")
+            {
+                return draw.font == &fonts::Font8x8C64 &&
+                       draw.x == M5.Display.width() - M5.Display.textWidth("1.0.0") &&
+                       draw.y == PromptBar::DEFAULT_Y - 8 &&
+                       draw.color == TFT_BLACK;
+            }
+        }
+        return false;
+    }
+
     bool showsPercentage()
     {
         for (const auto &frame : M5.Display.frames)
@@ -48,6 +63,8 @@ int main()
     splash.show();
     require(hasText("Blackjack") && M5.Display.frames.back().cards.size() == 4,
             "splash shows the title over four cards");
+    require(showsVersionAtExpectedPosition(M5.Display.frames.back()),
+            "powered splash shows version in the lower-right above the prompt");
     checkNoBattery("splash has no battery");
 
     M5.Display = {};
@@ -69,7 +86,7 @@ int main()
 
     M5.Display = {};
     const char *const lines[] = {"You won!", "Score 1:5"};
-    messages.show("Game over", lines, 2, "Press any key");
+    messages.show("Game over", lines, 2, "Press any button");
     require(hasText("Game over") && hasText("You won!") && hasText("Score 1:5"),
             "message screen shows title and lines");
     checkNoBattery("game over has no battery");
@@ -78,6 +95,8 @@ int main()
     splash.showPowerOff();
     require(M5.Display.frames.size() == 1 && hasText("Blackjack"),
             "power-off frame is the splash art");
+    require(showsVersionAtExpectedPosition(M5.Display.frames.back()),
+            "power-off splash shows version in the lower-right above the prompt");
     checkNoBattery("power-off frame has no battery");
 
     M5.Display = {};

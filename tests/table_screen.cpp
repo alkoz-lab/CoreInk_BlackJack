@@ -1,4 +1,5 @@
 #include "../blackjack/src/CoreInkKit/BatteryIndicator.hpp"
+#include "../blackjack/src/CoreInkKit/LightSleep.hpp"
 #include "../blackjack/CardRenderer.hpp"
 #include "../blackjack/HitStandInput.hpp"
 #include "../blackjack/TableScreen.hpp"
@@ -71,8 +72,10 @@ namespace
         table.showHit({1, dealer, player, score}, dealerHit ? Side::Dealer : Side::Player);
         require(M5.Display.frames.size() == 2, "hit has back and face frames");
         const std::vector<std::string> expectedEvents = {
-            "display", "wait", "delay:1000", "display", "wait", "delay:200"};
-        require(displayEvents == expectedEvents, "back stays visible for a second after refresh");
+            "display", "wait", "timer:1000000", "lightSleep", "disableTimer",
+            "display", "wait", "timer:200000", "lightSleep", "disableTimer"};
+        require(displayEvents == expectedEvents,
+                "hit sleeps for the animation delays after each refresh");
         const int hitY = dealerHit ? DEALER_Y : PLAYER_Y;
         const auto &backFrame = M5.Display.frames[0];
         const auto &faceFrame = M5.Display.frames[1];
@@ -104,6 +107,20 @@ namespace
         require(hasText(backFrame, total), "back frame does not reveal the new total");
         std::snprintf(total, sizeof(total), "ã=%d", hitHand.getValue());
         require(hasText(faceFrame, total), "face frame updates the total");
+    }
+
+    void checkLightSleepDuration()
+    {
+        displayEvents.clear();
+        LightSleep::forDuration(250);
+        const std::vector<std::string> expectedEvents = {
+            "wait", "timer:250000", "lightSleep", "disableTimer"};
+        require(displayEvents == expectedEvents,
+                "timed light sleep waits for refresh, configures microseconds, then clears timer wake");
+
+        displayEvents.clear();
+        LightSleep::forDuration(0);
+        require(displayEvents.empty(), "zero-duration light sleep is a no-op");
     }
 
     void checkBatteryOnStatusBar()
@@ -186,9 +203,13 @@ int main()
     for (int count = 1; count <= 21; ++count)
     {
         M5.Display = {};
+        displayEvents.clear();
         const Hand dealer = makeHand("DEALER", count);
         const Hand player = makeHand("PLAYER", count);
         table.showInitialDeal({1, dealer, player, score});
+        require(displayEvents == std::vector<std::string>{
+                    "display", "wait", "timer:200000", "lightSleep", "disableTimer"},
+                "initial deal uses a timed light sleep");
         checkRow(M5.Display.frames.back(), DEALER_Y, count);
         checkRow(M5.Display.frames.back(), PLAYER_Y, count);
     }
@@ -197,6 +218,7 @@ int main()
         checkHit(false, count);
         checkHit(true, count);
     }
+    checkLightSleepDuration();
     checkBatteryOnStatusBar();
     checkBatteryFill();
     checkRoundResultText();

@@ -113,6 +113,6 @@ BlackjackApp::State BlackjackApp::playGame()
     snprintf(scoreLine, sizeof(scoreLine), "Score %d:%d", score.dealerScore(), score.playerScore());
     const char *const lines[] = {
         score.dealerScore() > score.playerScore() ? "Dealer won." : "You won!", scoreLine};
-    messages_.show("Game over", lines, 2, "Press any key");
+    messages_.show("Game over", lines, 2, "Press any button");
     return State::Menu;
 }

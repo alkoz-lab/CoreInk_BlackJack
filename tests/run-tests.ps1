@@ -18,13 +18,13 @@ $suites = [ordered]@{
     'deck_shuffle'     = 'Deck', 'Card'
     'battery_monitor'  = 'BatteryMonitor'
     'table_screen'     = 'TableScreen', 'HandView', 'CardRenderer', 'PromptBar', 'Buttons',
-                         'BatteryMonitor', 'Hand', 'Card', 'Score'
+                         'LightSleep', 'BatteryMonitor', 'Hand', 'Card', 'Score'
     'screens'          = 'SplashScreen', 'MenuScreen', 'PagedTextScreen', 'MessageScreen',
                          'CardRenderer', 'PromptBar', 'Buttons', 'Card'
     'app_states'       = 'BlackjackApp', 'SplashScreen', 'MenuScreen', 'PagedTextScreen',
                          'MessageScreen', 'TableScreen', 'HandView', 'CardRenderer', 'PromptBar',
-                         'Buttons', 'BatteryMonitor', 'RoundController', 'RoundJudge', 'Deck',
-                         'Hand', 'Card', 'Score'
+                         'Buttons', 'LightSleep', 'BatteryMonitor', 'RoundController',
+                         'RoundJudge', 'Deck', 'Hand', 'Card', 'Score'
 }
 
 $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
